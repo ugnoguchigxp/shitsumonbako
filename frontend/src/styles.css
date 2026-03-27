@@ -1,0 +1,203 @@
+:root {
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  color: #111827;
+  background: linear-gradient(180deg, #f8fafc, #eef2ff);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.page.admin {
+  align-items: flex-start;
+}
+
+.panel {
+  width: min(980px, 100%);
+  background: #ffffff;
+  border: 1px solid #dbe3ff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(29, 78, 216, 0.12);
+}
+
+.panel.compact {
+  max-width: 420px;
+  text-align: center;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+h2 {
+  margin: 8px 0;
+}
+
+.lead {
+  margin-top: 0;
+  color: #334155;
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+label {
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #bfd0ff;
+  border-radius: 8px;
+  padding: 10px;
+  background: #ffffff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button,
+.button-link {
+  border: none;
+  background: #1d4ed8;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.ghost {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+button.danger {
+  background: #dc2626;
+}
+
+.error {
+  color: #b91c1c;
+  margin: 0;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+th,
+td {
+  border-bottom: 1px solid #dbe3ff;
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.details-row td {
+  padding: 0;
+  border-bottom: 2px solid #6366f1;
+  background-color: #f5f7ff;
+}
+
+.details-content {
+  padding: 16px 24px;
+  display: grid;
+  gap: 16px;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.detail-item .label {
+  display: block;
+  font-size: 0.85rem;
+  color: #6366f1;
+  font-weight: 700;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.detail-item .value {
+  color: #1e293b;
+  line-height: 1.6;
+}
+
+.detail-item .value.message-text {
+  white-space: pre-wrap;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.row-expanded td {
+  border-bottom: none;
+  background-color: #f5f7ff;
+}
+
+.button-row {
+  display: flex;
+  gap: 8px;
+}
+
+.list-head {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: 16px;
+  }
+}

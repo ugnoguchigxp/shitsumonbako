@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-quickquestion}
+      POSTGRES_USER: ${POSTGRES_USER:-quickquestion}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in environment}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: acrquickquestion2026.azurecr.io/quickquestion-backend:latest
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-quickquestion}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in environment}@postgres:5432/${POSTGRES_DB:-quickquestion}
+      PORT: 8787
+      LOG_LEVEL: info
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "80:8787"
+
+volumes:
+  postgres_data:

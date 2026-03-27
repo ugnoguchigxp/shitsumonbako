@@ -1,0 +1,14 @@
+{
+  "name": "quick-question",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "sh -c 'if command -v bun >/dev/null 2>&1; then (cd frontend && bun run build) && (cd backend && STATIC_ROOT=../frontend/dist bun --env-file=../.env run dev); elif command -v pnpm >/dev/null 2>&1; then (cd frontend && pnpm run build) && (cd backend && STATIC_ROOT=../frontend/dist pnpm run dev); else (cd frontend && npm run build) && (cd backend && STATIC_ROOT=../frontend/dist npm run dev); fi'",
+    "build": "sh -c 'if command -v bun >/dev/null 2>&1; then (cd backend && bun run build) && (cd frontend && bun run build); elif command -v pnpm >/dev/null 2>&1; then (cd backend && pnpm run build) && (cd frontend && pnpm run build); else (cd backend && npm run build) && (cd frontend && npm run build); fi'",
+    "start": "sh -c 'if command -v bun >/dev/null 2>&1; then (cd backend && bun run start); elif command -v pnpm >/dev/null 2>&1; then (cd backend && pnpm run start); else (cd backend && npm run start); fi'"
+  }
+}
