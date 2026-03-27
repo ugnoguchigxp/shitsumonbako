@@ -1,7 +1,13 @@
 try {
   process.loadEnvFile?.("../.env");
 } catch {
-  // Ignore missing .env in container/runtime environments.
+  // Ignore when .env does not exist.
+}
+
+try {
+  process.loadEnvFile?.(".env");
+} catch {
+  // Ignore when .env does not exist.
 }
 
 const parsePort = (value: string | undefined): number => {
@@ -14,13 +20,20 @@ const parsePort = (value: string | undefined): number => {
   return parsed;
 };
 
-const databaseUrl = process.env.DATABASE_URL;
-if (!databaseUrl || databaseUrl.trim().length === 0) {
-  throw new Error("DATABASE_URL is required");
+const fallbackDatabaseUrl = "postgresql://quickquestion:quickquestion@localhost:5433/quickquestion";
+const databaseUrl = process.env.DATABASE_URL?.trim();
+
+if (!databaseUrl || databaseUrl.length === 0) {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("DATABASE_URL is required");
+  }
+  console.warn(
+    `DATABASE_URL is not set. Using local fallback: ${fallbackDatabaseUrl}`
+  );
 }
 
 export const config = {
-  databaseUrl,
+  databaseUrl: databaseUrl && databaseUrl.length > 0 ? databaseUrl : fallbackDatabaseUrl,
   logLevel: process.env.LOG_LEVEL ?? "info",
   port: parsePort(process.env.PORT),
   staticRoot: process.env.STATIC_ROOT ?? "./public"
